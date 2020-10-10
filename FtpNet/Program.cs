@@ -16,6 +16,7 @@ namespace FtpNet
                 Console.WriteLine("参数缺失，请检查！");
                 return;
             }
+            Console.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff")}开始上传！");
             string ip = args[0];
             string port = args[1];
             var user = args[2];
@@ -43,7 +44,7 @@ namespace FtpNet
                 }
             }
             FTPHelper.UploadDirectory(localPath, ftpPath, fileName, user, password);
-            Console.WriteLine("上传成功！");
+            Console.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff")}上传成功！");
         }
     }
 }

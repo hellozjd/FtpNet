@@ -147,17 +147,28 @@ namespace FtpNet
 
             //先上传文件
             Console.WriteLine(dir + "下的文件数：" + infos[0].Count.ToString());
-            for (int i = 0; i < infos[0].Count; i++)
+            //for (int i = 0; i < infos[0].Count; i++)
+            //{
+            //    Console.WriteLine(infos[0][i]);
+            //    UpLoadFile(dir + infos[0][i], ftpPath + dirName + @"/" + infos[0][i], ftpUser, ftpPassword);
+            //}
+            var files = infos[0];
+            files.AsParallel().ForAll(f =>
             {
-                Console.WriteLine(infos[0][i]);
-                UpLoadFile(dir + infos[0][i], ftpPath + dirName + @"/" + infos[0][i], ftpUser, ftpPassword);
-            }
+                Console.WriteLine(f);
+                UpLoadFile(dir + f, ftpPath + dirName + @"/" + f, ftpUser, ftpPassword);
+            });
             //再处理文件夹
             Console.WriteLine(dir + "下的目录数：" + infos[1].Count.ToString());
-            for (int i = 0; i < infos[1].Count; i++)
+            var dirs = infos[1];
+            //for (int i = 0; i < infos[1].Count; i++)
+            //{
+            //    UploadDirectory(dir, ftpPath + dirName + @"/", infos[1][i], ftpUser, ftpPassword);
+            //}
+            dirs.AsParallel().ForAll(a =>
             {
-                UploadDirectory(dir, ftpPath + dirName + @"/", infos[1][i], ftpUser, ftpPassword);
-            }
+                UploadDirectory(dir, ftpPath + dirName + @"/", a, ftpUser, ftpPassword);
+            });
         }
 
 
